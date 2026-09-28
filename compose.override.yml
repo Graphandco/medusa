@@ -1,0 +1,65 @@
+services:
+   back:
+      container_name: medusa-back-dev
+      image: medusa-back-dev:latest
+      build:
+         context: .
+         dockerfile: Dockerfile.dev
+         tags:
+            - medusa-back-dev:latest
+      command: ["sh", "./start-dev.sh"]
+      cpus: 2
+      mem_limit: 4g
+      ports:
+         - "9000:9000"
+         - "5173:5173"
+      env_file:
+         - .env
+      volumes:
+         - .:/server
+         - /server/node_modules
+         - /server/apps/backend/node_modules
+         - /server/apps/storefront/node_modules
+      environment:
+         NODE_ENV: development
+         DATABASE_URL: postgres://medusa:medusa@postgres:5432/medusa
+         REDIS_URL: ""
+         MEDUSA_WORKER_MODE: shared
+         STORE_CORS: http://localhost:8000
+         ADMIN_CORS: http://localhost:5173,http://localhost:9000
+         AUTH_CORS: http://localhost:5173,http://localhost:9000
+         JWT_SECRET: supersecret
+         COOKIE_SECRET: supersecret
+      depends_on:
+         postgres:
+            condition: service_healthy
+      networks:
+         - web-network
+
+   postgres:
+      image: postgres:15-alpine
+      container_name: medusa-postgres
+      restart: unless-stopped
+      ports:
+         - "5432:5432"
+      environment:
+         POSTGRES_DB: medusa
+         POSTGRES_USER: medusa
+         POSTGRES_PASSWORD: medusa
+      volumes:
+         - medusa_postgres_data:/var/lib/postgresql/data
+      networks:
+         - web-network
+      healthcheck:
+         test: ["CMD-SHELL", "pg_isready -U medusa -d medusa"]
+         interval: 5s
+         timeout: 5s
+         retries: 20
+         start_period: 10s
+
+volumes:
+   medusa_postgres_data:
+
+networks:
+   web-network:
+      external: true

@@ -1,0 +1,36 @@
+services:
+   front:
+      platform: linux/amd64
+      container_name: medusa-front
+      image: dockerhub.graphandco.com/medusa-front:latest
+      build:
+         context: ../..
+         dockerfile: apps/storefront/Dockerfile
+         args:
+            NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY: ${NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY}
+            NEXT_PUBLIC_MEDUSA_BACKEND_URL: ${NEXT_PUBLIC_MEDUSA_BACKEND_URL}
+            NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL}
+            NEXT_PUBLIC_DEFAULT_REGION: ${NEXT_PUBLIC_DEFAULT_REGION:-dk}
+         tags:
+            - dockerhub.graphandco.com/medusa-front:1.0.0
+            - dockerhub.graphandco.com/medusa-front:latest
+      restart: unless-stopped
+      env_file:
+         - .env.production
+      environment:
+         NODE_ENV: production
+      networks:
+         - web-network
+      cpus: 0.5
+      mem_limit: 512m
+      security_opt:
+         - no-new-privileges:true
+      logging:
+         driver: json-file
+         options:
+            max-size: 10m
+            max-file: "3"
+
+networks:
+   web-network:
+      external: true

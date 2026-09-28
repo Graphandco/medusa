@@ -1,0 +1,35 @@
+services:
+   front:
+      container_name: medusa-front-dev
+      image: medusa-front-dev:latest
+      build:
+         context: ../..
+         dockerfile: apps/storefront/Dockerfile.dev
+         tags:
+            - medusa-front-dev:latest
+      command: ["pnpm", "--filter", "@dtc/storefront", "dev"]
+      cpus: 2
+      mem_limit: 4g
+      ports:
+         - "8000:8000"
+      env_file:
+         - .env
+      volumes:
+         - ../..:/server
+         - /server/node_modules
+         - /server/apps/backend/node_modules
+         - /server/apps/storefront/node_modules
+         - /server/apps/storefront/.next
+      environment:
+         NODE_ENV: development
+         # Le serveur Next tourne dans Docker : localhost est le conteneur.
+         # host.docker.internal atteint medusa-back publié sur le port 9000.
+         NEXT_PUBLIC_MEDUSA_BACKEND_URL: http://host.docker.internal:9000
+         NEXT_PUBLIC_BASE_URL: http://localhost:8000
+         NEXT_PUBLIC_DEFAULT_REGION: dk
+      networks:
+         - web-network
+
+networks:
+   web-network:
+      external: true
