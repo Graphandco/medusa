@@ -27,11 +27,11 @@ export default function TransferRequestForm() {
       <div className="grid sm:grid-cols-2 items-center gap-x-8 gap-y-4 w-full">
         <div className="flex flex-col gap-y-1">
           <Heading level="h3" className="!text-sm font-semibold text-neutral-950">
-            Order transfers
+            Transferts de commandes
           </Heading>
           <p className="text-small-regular text-neutral-500">
-            Can&apos;t find the order you are looking for?
-            <br /> Connect an order to your account.
+            Vous ne trouvez pas la commande que vous cherchez ?
+            <br /> Connectez une commande à votre compte.
           </p>
         </div>
         <form
@@ -61,10 +61,10 @@ export default function TransferRequestForm() {
             <CheckCircleMiniSolid className="w-4 h-4 text-emerald-500" />
             <div className="flex flex-col gap-y-1">
               <Text className="text-medim-pl text-neutral-950">
-                Transfer for order {state.order?.id} requested
+                Transfert pour la commande {state.order?.id} demandé
               </Text>
               <Text className="text-base-regular text-neutral-600">
-                Transfer request email sent to {state.order?.email}
+                Email de demande de transfert envoyé à {state.order?.email}
               </Text>
             </div>
           </div>

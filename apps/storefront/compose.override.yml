@@ -1,5 +1,7 @@
 services:
    front:
+      # Native arm64 on Apple Silicon (compose.yml pins amd64 for prod servers)
+      platform: linux/arm64
       container_name: medusa-front-dev
       image: medusa-front-dev:latest
       build:
@@ -16,19 +18,25 @@ services:
          - .env
       volumes:
          - ../..:/server
-         - /server/node_modules
-         - /server/apps/backend/node_modules
-         - /server/apps/storefront/node_modules
-         - /server/apps/storefront/.next
+         - medusa_front_node_modules:/server/node_modules
+         - medusa_front_backend_node_modules:/server/apps/backend/node_modules
+         - medusa_front_storefront_node_modules:/server/apps/storefront/node_modules
+         - medusa_front_next:/server/apps/storefront/.next
       environment:
          NODE_ENV: development
-         # Le serveur Next tourne dans Docker : localhost est le conteneur.
-         # host.docker.internal atteint medusa-back publié sur le port 9000.
-         NEXT_PUBLIC_MEDUSA_BACKEND_URL: http://host.docker.internal:9000
+         # Navigateur → localhost (port publié). Serveur Next → host.docker.internal.
+         NEXT_PUBLIC_MEDUSA_BACKEND_URL: http://localhost:9000
+         MEDUSA_BACKEND_URL: http://host.docker.internal:9000
          NEXT_PUBLIC_BASE_URL: http://localhost:8000
          NEXT_PUBLIC_DEFAULT_REGION: dk
       networks:
          - web-network
+
+volumes:
+   medusa_front_node_modules:
+   medusa_front_backend_node_modules:
+   medusa_front_storefront_node_modules:
+   medusa_front_next:
 
 networks:
    web-network:

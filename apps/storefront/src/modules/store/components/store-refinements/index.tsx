@@ -20,7 +20,7 @@ const SortProducts = ({ currencyCode }: { currencyCode: string }) => {
 
   return (
     <FilterRadioGroup
-      title="Sort by"
+      title="Trier par"
       items={items}
       value={currentRefinement}
       handleChange={refine}
@@ -37,8 +37,8 @@ const StoreRefinements = ({ currencyCode }: { currencyCode: string }) => {
       <OptionRefinements />
       <PriceRange currencyCode={currencyCode} />
       <OnSaleToggle currencyCode={currencyCode} />
-      <RefinementGroup attribute={CATEGORY_ATTRIBUTE} title="Category" />
-      <RefinementGroup attribute={LABELS_ATTRIBUTE} title="Labels" />
+      <RefinementGroup attribute={CATEGORY_ATTRIBUTE} title="Catégorie" />
+      <RefinementGroup attribute={LABELS_ATTRIBUTE} title="Tags" />
     </div>
   )
 }

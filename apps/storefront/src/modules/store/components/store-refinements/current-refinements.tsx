@@ -34,7 +34,7 @@ function refinementLabel(refinement: Refinement, currencyCode: string) {
   }
 
   if (attribute === priceAttribute("on_sale", currencyCode)) {
-    return "On sale"
+    return "En promotion"
   }
 
   if (attribute === priceAttribute("min_price", currencyCode)) {
@@ -45,16 +45,16 @@ function refinementLabel(refinement: Refinement, currencyCode: string) {
     })
 
     return operator === "<=" || operator === "<"
-      ? `Up to ${amount}`
-      : `From ${amount}`
+      ? `Jusqu'à ${amount}`
+      : `À partir de ${amount}`
   }
 
   if (attribute === CATEGORY_ATTRIBUTE) {
-    return `Category: ${label}`
+    return `Catégorie: ${label}`
   }
 
   if (attribute === LABELS_ATTRIBUTE) {
-    return `Label: ${label}`
+    return `Tag: ${label}`
   }
 
   return label

@@ -1,5 +1,7 @@
 services:
    back:
+      # Native arm64 on Apple Silicon (compose.yml pins amd64 for prod servers)
+      platform: linux/arm64
       container_name: medusa-back-dev
       image: medusa-back-dev:latest
       build:
@@ -17,9 +19,9 @@ services:
          - .env
       volumes:
          - .:/server
-         - /server/node_modules
-         - /server/apps/backend/node_modules
-         - /server/apps/storefront/node_modules
+         - medusa_back_node_modules:/server/node_modules
+         - medusa_back_backend_node_modules:/server/apps/backend/node_modules
+         - medusa_back_storefront_node_modules:/server/apps/storefront/node_modules
       environment:
          NODE_ENV: development
          DATABASE_URL: postgres://medusa:medusa@postgres:5432/medusa
@@ -59,6 +61,9 @@ services:
 
 volumes:
    medusa_postgres_data:
+   medusa_back_node_modules:
+   medusa_back_backend_node_modules:
+   medusa_back_storefront_node_modules:
 
 networks:
    web-network:

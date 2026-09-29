@@ -1,7 +1,10 @@
+"use client"
+
 import { deleteLineItem } from "@lib/data/cart"
 import { Spinner, Trash } from "@medusajs/icons"
 import { clx } from "@modules/common/components/ui"
 import { useState } from "react"
+import { toast } from "sonner"
 
 const DeleteButton = ({
   id,
@@ -16,9 +19,13 @@ const DeleteButton = ({
 
   const handleDelete = async (id: string) => {
     setIsDeleting(true)
-    await deleteLineItem(id).catch((_err) => {
+    try {
+      await deleteLineItem(id)
+      toast.success("Produit supprimé du panier")
+    } catch {
       setIsDeleting(false)
-    })
+      toast.error("Impossible de supprimer le produit")
+    }
   }
 
   return (

@@ -32,17 +32,17 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
   return (
     <>
       <div
-        className="content-container  flex flex-col small:flex-row small:items-start py-6 relative"
+        className="content-container py-6 relative"
         data-testid="product-container"
       >
-        <div className="flex flex-col small:sticky small:top-48 small:py-0 small:max-w-[300px] w-full py-8 gap-y-6">
-          <ProductInfo product={product} />
-          <ProductTabs product={product} />
-        </div>
-        <div className="block w-full relative">
-          <ImageGallery images={images} />
-        </div>
-        <div className="flex flex-col small:sticky small:top-48 small:py-0 small:max-w-[300px] w-full py-8 gap-y-12">
+        <div className="flex flex-col md:hidden gap-y-8">
+          <div className="flex flex-col gap-y-6">
+            <ProductInfo product={product} />
+            <ProductTabs product={product} />
+          </div>
+          <div className="block w-full relative">
+            <ImageGallery images={images} />
+          </div>
           <ProductOnboardingCta />
           <Suspense
             fallback={
@@ -55,6 +55,29 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
           >
             <ProductActionsWrapper id={product.id} region={region} />
           </Suspense>
+        </div>
+
+        <div className="hidden md:grid md:grid-cols-2 md:gap-x-8 md:items-start">
+          <div className="block w-full relative">
+            <ImageGallery images={images} />
+          </div>
+
+          <div className="flex flex-col gap-y-8">
+            <ProductInfo product={product} />
+            <ProductOnboardingCta />
+            <Suspense
+              fallback={
+                <ProductActions
+                  disabled={true}
+                  product={product}
+                  region={region}
+                />
+              }
+            >
+              <ProductActionsWrapper id={product.id} region={region} />
+            </Suspense>
+            <ProductTabs product={product} />
+          </div>
         </div>
       </div>
       <div

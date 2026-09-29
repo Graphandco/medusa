@@ -1,12 +1,14 @@
 import { getLocaleHeader } from "@lib/util/get-locale-header"
 import Medusa, { FetchArgs, FetchInput } from "@medusajs/js-sdk"
 
-// Defaults to standard port for Medusa server
-let MEDUSA_BACKEND_URL = "http://localhost:9000"
-
-if (process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL) {
-  MEDUSA_BACKEND_URL = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL
-}
+/**
+ * Browser + InstantSearch → NEXT_PUBLIC_* (localhost:9000)
+ * Server Next in Docker → MEDUSA_BACKEND_URL (host.docker.internal / service name)
+ */
+const MEDUSA_BACKEND_URL =
+  process.env.MEDUSA_BACKEND_URL ||
+  process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL ||
+  "http://localhost:9000"
 
 export const sdk = new Medusa({
   baseUrl: MEDUSA_BACKEND_URL,

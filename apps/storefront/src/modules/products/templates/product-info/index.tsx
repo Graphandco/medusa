@@ -32,6 +32,19 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
         >
           {product.description}
         </Text>
+
+        {product.tags && product.tags.length > 0 && (
+          <div className="flex flex-wrap gap-2 mt-4">
+            {product.tags.map((tag) => (
+              <span
+                key={tag.id}
+                className="px-3 py-1 text-sm bg-ui-bg-subtle rounded-full text-ui-fg-subtle border border-ui-border-base"
+              >
+                {tag.value}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )

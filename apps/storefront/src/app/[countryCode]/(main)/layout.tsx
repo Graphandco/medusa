@@ -1,4 +1,5 @@
 import { Metadata } from "next"
+import { Toaster } from "sonner"
 
 import { listCartOptions, retrieveCart } from "@lib/data/cart"
 import { retrieveCustomer } from "@lib/data/customer"
@@ -40,6 +41,17 @@ export default async function PageLayout(props: { children: React.ReactNode }) {
       )}
       {props.children}
       <Footer />
+      <Toaster
+        position="bottom-right"
+        theme="dark"
+        toastOptions={{
+          style: {
+            background: "#000",
+            color: "#fff",
+            border: "1px solid #333",
+          },
+        }}
+      />
     </>
   )
 }
