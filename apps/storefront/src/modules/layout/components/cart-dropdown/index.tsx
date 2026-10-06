@@ -229,7 +229,7 @@ const CartDropdown = ({
                       <span className="text-ui-fg-base font-semibold">
                         Sous-total{" "}
                         <span className="font-normal text-ui-fg-subtle">
-                          (excl. taxes)
+                          (hors taxes)
                         </span>
                       </span>
                       <span

@@ -79,7 +79,7 @@ const CurrentRefinements = ({ currencyCode }: { currencyCode: string }) => {
     <div className="flex flex-col gap-y-3" data-testid="current-refinements">
       <div className="flex items-center justify-between gap-x-2 pr-6">
         <span className="txt-compact-small-plus text-ui-fg-subtle">
-          Applied filters
+          Filtres appliqués
         </span>
         {canClearAll && (
           <button
@@ -87,7 +87,7 @@ const CurrentRefinements = ({ currencyCode }: { currencyCode: string }) => {
             className="txt-compact-small-plus text-ui-fg-interactive hover:text-ui-fg-interactive-hover"
             data-testid="clear-refinements"
           >
-            Clear all
+            Effacer tous les filtres
           </button>
         )}
       </div>
